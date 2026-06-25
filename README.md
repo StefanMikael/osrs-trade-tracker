@@ -1,34 +1,64 @@
 # OSRS Trade Tracker
 
-A RuneLite external plugin project for exporting Grand Exchange events to the OSRS swing trade scanner.
+A RuneLite external plugin that records Grand Exchange offer activity to local
+JSON files for personal trade analysis and swing-trading tools.
 
-## Open in IntelliJ
+## Features
 
-Open this folder directly:
+- Tracks offers created, filled, completed, cancelled, and modified
+- Keeps a live snapshot of current Grand Exchange offers
+- Stores each RuneScape character in a separate folder
+- Records actual fill prices, quantities, worlds, and timestamps
+- Writes data locally only; the plugin does not upload trading data
 
-`osrs-trade-tracker-full-project`
+## Local data
 
-Set Gradle JVM to Temurin 17.
+Files are written to:
 
-Run:
+```text
+~/.runelite/osrs-trade-tracker/<Character Name>/
+```
 
-`src/test/java/com/mikaels/osrstradetracker/OsrsTradeTrackerPluginTest.java`
+On Windows:
 
-Add VM option:
+```text
+%USERPROFILE%\.runelite\osrs-trade-tracker\<Character Name>\
+```
 
-`-ea`
+Each character folder contains:
 
-## Output folder
+- `events.jsonl` — historical Grand Exchange events
+- `current_offers.json` — current open offers
+- `plugin.log` — diagnostic log
+- `version.json` — plugin and schema information
 
-`%USERPROFILE%\.runelite\osrs-trade-tracker`
+These files may contain the character name and trading history. They are not
+part of this repository and are excluded by `.gitignore`.
 
-Files:
+## Development
 
-- `events.jsonl`
-- `current_offers.json`
-- `plugin.log`
-- `version.json`
+The project follows the RuneLite external-plugin template and targets Java 11.
+A newer JDK, including JDK 17, can also compile it.
 
-## Gradle wrapper
+Run the development client with:
 
-This project includes the Gradle wrapper. On Windows, commands can be run with `gradlew.bat`; on macOS or Linux, use `./gradlew`.
+```text
+gradlew.bat run
+```
+
+On macOS or Linux:
+
+```text
+./gradlew run
+```
+
+Assertions are enabled by the Gradle run task.
+
+## Privacy
+
+The plugin stores data only in the local RuneLite directory. It does not send
+trade information to a remote server.
+
+## License
+
+BSD 2-Clause License. See `LICENSE`.
